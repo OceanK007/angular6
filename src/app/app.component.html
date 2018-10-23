@@ -1,3 +1,9 @@
+
+<!-- It will turn green on mouse over -->
+<p [appTurnGreen]="'green'" [defaultColor]="'yellow'">Turn into green on mouse over</p>
+<!-- This will work as well, this is property binding as well -->
+<p [appTurnGreen]="'green'" defaultColor="yellow">Turn into green on mouse over</p>
+
 <app-header (featureSelected)="onNavigate($event)"></app-header>
 <!-- Or Simply -->
 <!-- <app-header (featureSelected)="loadedFeature = $event"></app-header> -->
@@ -9,5 +15,3 @@
     </div>
   </div>
 </div>
-
-
