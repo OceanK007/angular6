@@ -1,11 +1,39 @@
-<app-header (featureSelected)="onNavigate($event)"></app-header>
-<!-- Or Simply -->
-<!-- <app-header (featureSelected)="loadedFeature = $event"></app-header> -->
-<div class="container mt-3">
+<div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <app-recipes *ngIf="loadedFeature === 'recipe'"></app-recipes>
-      <app-shopping-list *ngIf="loadedFeature !== 'recipe'"></app-shopping-list>
+    <div class="col-xl-12 mt-4">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <!-- You know that / is the default path and is the part of /servers and /users, 
+            that's why it's always active, to fix this we added [routerLinkActiveOptions]="{exact: true}", 
+            which tells that make it active only when the exact path matches -->
+            <a class="nav-link" id="home-tab" data-toggle="tab" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}" routerLink="/" role="tab" aria-controls="home" 
+            aria-selected="true">Home</a>
+          </li>
+          <li class="nav-item">
+            <!-- href="/servers" will reload the page, so must not be used -->
+            <!-- routerLink="/servers" will not reload page, so it's preferred way -->
+            <a class="nav-link" id="profile-tab" data-toggle="tab" routerLinkActive="active" 
+            [routerLink]="['/servers']" role="tab" aria-controls="profile" aria-selected="false">Servers</a>
+            <!-- [routerLink]="'servers'" will work too :: Relative path -->
+            <!-- [routerLink]="'/servers'" will work too :: Absolute path -->
+            <!-- routerLink="./servers" will work too :: It's same as routerLink="/servers" -->
+            <!-- routerLink="../servers" will work too :: Will remove the whole segment after localhost:4200
+            So, localhost:4200/anything/something will become localhost:4200/servers on clicking the link -->
+            <!-- [routerLink]="['/servers', '/otherURL']" will work too :: Absolute paths -->
+            <!-- [routerLink]="['servers', 'otherURL']" will work too :: Relative paths -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" routerLinkActive="active" 
+            routerLink="/users" role="tab" aria-controls="contact" aria-selected="false">Users</a>
+          </li>
+      </ul>
+
+      <div class="row">
+          <div class="col-xl-12 mt-2">
+            <router-outlet></router-outlet>
+          </div>
+      </div>
     </div>
   </div>
 </div>
