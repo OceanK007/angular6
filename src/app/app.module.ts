@@ -8,6 +8,7 @@ import { ServersComponent } from './servers/servers.component';
 import { UsersComponent } from './users/users.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserComponent } from './users/user/user.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { UserComponent } from './users/user/user.component';
     ServersComponent,
     UsersComponent,
     UserComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

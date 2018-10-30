@@ -1,4 +1,17 @@
 <p>
   home works!
 </p>
-<button class="btn btn-primary" (click)="loadServer()">Load Server</button>
+<button class="btn btn-primary" (click)="loadServerByPathParameters()">
+  Load server programmatically (Path Params)
+</button>
+<br><br>
+<a [routerLink]="['/servers', 5, 'edit']"
+   [queryParams]="{allowEdit: '1'}"
+   fragment="loading">  
+  localhost:4200/servers/5/edit?allowEdit=1#loading
+</a>
+<!-- Or [fragment]="'loading'" -->
+<br>
+<button class="btn btn-primary" (click)="loadServerByQueryParameters(5)">
+  Load server programmatically (QueryParams)
+</button>
