@@ -16,7 +16,7 @@ const routes: Routes = [
     { path: ':id/:name', component: UserComponent },
   ] },
   { path: 'not-found', component: PageNotFoundComponent },
-  { path: '', redirectTo: '/not-found'}
+  { path: '**', redirectTo: '/not-found'}
 ];
 
 @NgModule({
