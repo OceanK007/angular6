@@ -15,3 +15,9 @@
 <button class="btn btn-primary" (click)="loadServerByQueryParameters(5)">
   Load server programmatically (QueryParams)
 </button>
+
+<br><br>
+<!-- On login: will be able to access users tab -->
+<button class="btn btn-primary mr-3" (click)="onLogin()">Login</button>
+<!-- On logout: Will be redirected to home page on clicking users tab -->
+<button class="btn btn-primary" (click)="onLogout()">Logout</button>

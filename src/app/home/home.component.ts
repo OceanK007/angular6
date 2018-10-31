@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -39,5 +40,13 @@ export class HomeComponent implements OnInit {
     // by using relativeTo parameter. By default relativeTo is root url i.e. localhost:4200
 
     //this.router.navigate(['servers'], {relativeTo: this.activatedRoute})
+  }
+
+  onLogin() {
+    this.authService.login();
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

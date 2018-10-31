@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { ServersComponent } from './servers/servers.component';
 import { UserComponent } from './users/user/user.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
   // path: '/servers'  :: It is absolute path, so it will be localhost:4200/servers
@@ -12,7 +13,9 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'servers', component: ServersComponent },
   { path: 'servers/:id/edit', component: ServersComponent },
-  { path: 'users', component: UsersComponent, children: [
+  // canActivate will be automatically applied to children
+  // Use canActivateChild: [AuthGuardService] to apply only to children routes
+  { path: 'users', canActivate: [AuthGuardService], component: UsersComponent, children: [
     { path: ':id/:name', component: UserComponent },
   ] },
   { path: 'not-found', component: PageNotFoundComponent },
