@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { CanComponentDeactivate } from './can-deactive-guard.service';
 
 @Component({
   selector: 'app-servers',
   templateUrl: './servers.component.html',
   styleUrls: ['./servers.component.css']
 })
-export class ServersComponent implements OnInit {
+export class ServersComponent implements OnInit, CanComponentDeactivate {
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  serverName = "My Server";
+  isUpdated = false;
+
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     console.log(this.activatedRoute.snapshot.queryParams);
@@ -27,4 +32,16 @@ export class ServersComponent implements OnInit {
     // );
   }
 
+  updateServer() {
+    this.isUpdated = true;
+    this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+  }
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if('My Server' !== this.serverName && !this.isUpdated) {
+      return confirm('Do you want to discard the changes?');
+    } else {
+      return true;
+    }
+  }
 }
