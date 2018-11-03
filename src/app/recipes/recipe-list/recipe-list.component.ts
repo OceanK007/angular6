@@ -19,6 +19,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   onNewRecipe() {
-    this.router.navigate(['new'], {relativeTo: this.activatedRoute})
+    // path parameters are not kept and are removed even when you use relativeTo
+    this.router.navigate(['new'], {relativeTo: this.activatedRoute});
   }
 }
