@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  loadServerByPathParameters() {
+  loadServerProgramatically() {
     // complex calculation
     
     this.router.navigate(['/servers']); // absolute path
