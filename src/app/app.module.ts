@@ -18,6 +18,10 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { RecipesService } from './recipes/recipes-services';
 import { DataStorageService } from './shared/data-storage.service';
 import { HttpModule } from '@angular/http';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SigninComponent } from './auth/signin/signin.component';
+import { FirebaseAuthService } from './auth/firebase.auth.service';
+import { FirebaseAuthGuardService } from './auth/firebase-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,9 @@ import { HttpModule } from '@angular/http';
     ShoppingEditComponent,
     DropdownDirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    SignupComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,7 @@ import { HttpModule } from '@angular/http';
     AppRoutingModule,
     HttpModule
   ],
-  providers: [ShoppingListService, RecipesService, DataStorageService],
+  providers: [ShoppingListService, RecipesService, DataStorageService, FirebaseAuthService, FirebaseAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
