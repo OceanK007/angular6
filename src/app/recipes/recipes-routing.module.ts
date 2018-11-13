@@ -7,7 +7,8 @@ import { FirebaseAuthGuardService } from "../auth/firebase-auth-guard.service";
 import { RecipeDetailComponent } from "./recipe-detail/recipe-detail.component";
 
 const recipesRoute: Routes = [
-    { path: 'recipes', component: RecipesComponent, children: [
+    // Modified path: 'recipes' to path: '' for lazy loading
+    { path: '', component: RecipesComponent, children: [
         { path: '', component: RecipeStartComponent },
         { path: 'new', component: RecipeEditComponent, canActivate: [FirebaseAuthGuardService] },
         { path: ':id', component: RecipeDetailComponent },
@@ -20,7 +21,10 @@ const recipesRoute: Routes = [
         // .forChild() must be used for others modules except AppModule
         RouterModule.forChild(recipesRoute)
     ], 
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [
+        FirebaseAuthGuardService
+    ]
 })
 export class RecipesRoutingModule {
     

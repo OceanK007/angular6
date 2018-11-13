@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { RecipesService } from "../recipes/recipes-services";
 import { Recipe } from "../recipes/recipe.model";
 import { map } from "rxjs/operators";
-import { FirebaseAuthService } from "../auth/firebase.auth.service";
+import { FirebaseAuthService } from "../auth/firebase-auth.service";
 
 @Injectable()
 export class DataStorageService {

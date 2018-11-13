@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { DataStorageService } from "../shared/data-storage.service";
+import { DataStorageService } from "../../shared/data-storage.service";
 import { Response } from "@angular/http";
-import { FirebaseAuthService } from "../auth/firebase.auth.service";
+import { FirebaseAuthService } from "../../auth/firebase-auth.service";
 
 @Component({
     selector: 'app-header',
@@ -24,5 +24,9 @@ export class HeaderComponent {
 
     onLogout() {
         this.firebaseAuthService.logout();
+    }
+
+    isAuthenticated() {
+        return this.firebaseAuthService.isAuthenticated();
     }
 }

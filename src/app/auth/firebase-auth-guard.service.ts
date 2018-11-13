@@ -1,6 +1,6 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Injectable } from "@angular/core";
-import { FirebaseAuthService } from "./firebase.auth.service";
+import { FirebaseAuthService } from "./firebase-auth.service";
 
 @Injectable()
 export class FirebaseAuthGuardService implements CanActivate {
