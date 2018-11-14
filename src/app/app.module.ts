@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpModule } from '@angular/http';
 import { SharedModule } from './shared/shared.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { FirebaseAuthModule } from './auth/firebase-auth.module';
@@ -18,8 +18,8 @@ import { CoreModule } from './core/core.module';
     // So add CommonModule in other(feature) modules
     // And BrowserModule must be only in app.module.ts
     BrowserModule,  
+    HttpClientModule,
     AppRoutingModule,
-    HttpModule,
     SharedModule,  
     ShoppingListModule,
     FirebaseAuthModule,
