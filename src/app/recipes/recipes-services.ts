@@ -1,14 +1,11 @@
 import { Recipe } from "./recipe.model";
-import { Injectable } from "@angular/core";
-import { Ingredient } from "../shared/ingredient.mode";
-import { ShoppingListService } from "../shopping-list/shopping-list.services";
+import { Ingredient } from "../shared/ingredient.model";
 import { Subject } from "rxjs";
 
-@Injectable()
 export class RecipesService {
     recipesChanged = new Subject<Recipe[]>();
 
-    constructor(private shoppingListService: ShoppingListService) {}
+    constructor() {}
 
     private recipes: Recipe[] = [
         new Recipe('A Test Recipe', 
@@ -33,10 +30,6 @@ export class RecipesService {
 
     getRecipe(index: number) {
         return this.recipes[index];
-    }
-
-    addIngredientsToShopingList(ingredients: Ingredient[]) {
-        this.shoppingListService.addIngredients(ingredients);
     }
 
     addRecipe(recipe: Recipe) {

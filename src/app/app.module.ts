@@ -8,6 +8,8 @@ import { SharedModule } from './shared/shared.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { FirebaseAuthModule } from './auth/firebase-auth.module';
 import { CoreModule } from './core/core.module';
+import { StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/ngrx/shopping-list.reducers';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { CoreModule } from './core/core.module';
     SharedModule,  
     ShoppingListModule,
     FirebaseAuthModule,
-    CoreModule
+    CoreModule,
+    StoreModule.forRoot({shoppingList: shoppingListReducer})   // For NgRX // .forRoot() : for eagerly loaded modules, not lazily loaded
   ],
   // Even if you doing modularization, if you want a service to be available for whole application, provide it in app.module.ts
   providers: [],
