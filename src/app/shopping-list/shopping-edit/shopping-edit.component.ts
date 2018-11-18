@@ -4,23 +4,23 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as ShoppingListActionsImport from '../ngrx/shopping-list.actions';
-import * as ShoppingListReducerImport from '../ngrx/shopping-list.reducers';
+import * as AppReducersImport from '../../ngrx/app.reducers';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css']
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnInit, OnDestroy {
   @ViewChild('shoppingEditForm') sEditForm: NgForm;
   subscription: Subscription;
   editMode = false;
   editedItem: Ingredient;
 
-  constructor(private store: Store<ShoppingListReducerImport.AppState>) { }
+  constructor(private store: Store<AppReducersImport.AppState>) { }
 
   ngOnInit() {
-    this.store.select('shoppingList').subscribe(
+    this.subscription = this.store.select('shoppingList').subscribe(
       data => {
         if(data.editedIngredientIndex > -1) {
           this.editedItem = data.editedIngredient;
@@ -41,10 +41,8 @@ export class ShoppingEditComponent implements OnInit {
     const value = form.value;
     const newIngredient = new Ingredient(value.name, value.amount);
     if(this.editMode) {
-      //this.shoppingListService.updateIngredient(this.editedItemIndex, newIngredient);
       this.store.dispatch(new ShoppingListActionsImport.UpdateIngredient({ingredient: newIngredient}));
     } else {
-      // this.shoppingListService.addIngredient(newIngredient);
       this.store.dispatch(new ShoppingListActionsImport.AddIngredient(newIngredient));
     }
 
@@ -61,5 +59,10 @@ export class ShoppingEditComponent implements OnInit {
     //this.shoppingListService.deleteIngredient(this.editedItemIndex);
     this.store.dispatch(new ShoppingListActionsImport.DeleteIngredient());
     this.onClear();
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new ShoppingListActionsImport.StopEdit());
+    this.subscription.unsubscribe();
   }
 }

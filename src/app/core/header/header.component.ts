@@ -1,14 +1,26 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { DataStorageService } from "../../shared/data-storage.service";
 import { FirebaseAuthService } from "../../auth/firebase-auth.service";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
+import { Store } from "@ngrx/store";
+import * as AppReducersImport from '../../ngrx/app.reducers';
+import * as FirebaseAuthReducersImport from '../../auth/ngrx/firebase-auth.reducers';
+import { Observable } from "rxjs";
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
 })
-export class HeaderComponent {
-    constructor(private dataStorageService: DataStorageService, private firebaseAuthService: FirebaseAuthService) {}
+export class HeaderComponent implements OnInit {
+    authState: Observable<FirebaseAuthReducersImport.State>;
+
+    constructor(private dataStorageService: DataStorageService, 
+                private firebaseAuthService: FirebaseAuthService,
+                private store: Store<AppReducersImport.AppState>) {}
+
+    ngOnInit() {
+        this.authState = this.store.select('auth');
+    }
 
     onSaveData() {
         this.dataStorageService.storeRecipes().subscribe(
@@ -66,9 +78,5 @@ export class HeaderComponent {
 
     onLogout() {
         this.firebaseAuthService.logout();
-    }
-
-    isAuthenticated() {
-        return this.firebaseAuthService.isAuthenticated();
     }
 }
