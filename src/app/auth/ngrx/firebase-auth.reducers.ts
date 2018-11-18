@@ -25,6 +25,11 @@ export function firebaseAuthReducer(state = initialState, action: FirebaseAuthAc
                 token: null,
                 authenticated: false
             };
+        case (FirebaseAuthActionsImport.SET_TOKEN):
+            return {
+                ...state,
+                token: action.payload       // action.payload is token value
+            };
         default:
             return state;
     }

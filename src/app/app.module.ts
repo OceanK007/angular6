@@ -10,6 +10,8 @@ import { FirebaseAuthModule } from './auth/firebase-auth.module';
 import { CoreModule } from './core/core.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './ngrx/app.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { FirebaseAuthEffects } from './auth/ngrx/firebase-auth.effects';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { reducers } from './ngrx/app.reducers';
     ShoppingListModule,
     FirebaseAuthModule,
     CoreModule,
-    StoreModule.forRoot(reducers)   // For NgRX // .forRoot()
+    StoreModule.forRoot(reducers),   // For NgRX // .forRoot()
+    EffectsModule.forRoot([FirebaseAuthEffects])
   ],
   // Even if you doing modularization, if you want a service to be available for whole application, provide it in app.module.ts
   providers: [],
