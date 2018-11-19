@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { FirebaseAuthService } from '../firebase-auth.service';
+import * as AppReducers from '../../ngrx/app.reducers';
+import * as FirebaseAuthActionsImport from '../ngrx/firebase-auth.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-signin',
@@ -9,7 +11,7 @@ import { FirebaseAuthService } from '../firebase-auth.service';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private firebaseAuthService: FirebaseAuthService) { }
+  constructor(private store: Store<AppReducers.AppState>) { }
 
   ngOnInit() {
   }
@@ -18,6 +20,7 @@ export class SigninComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    this.firebaseAuthService.signinUser(email,password);
+    //this.firebaseAuthService.signinUser(email,password);
+    this.store.dispatch(new FirebaseAuthActionsImport.TrySignin({username: email, password: password}));
   }
 }

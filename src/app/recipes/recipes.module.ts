@@ -9,6 +9,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { RecipesRoutingModule } from "./recipes-routing.module";
 import { SharedModule } from "../shared/shared.module";
+import { StoreModule } from "@ngrx/store";
+import { recipeReducer } from "./ngrx/recipe.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { RecipeEffects } from "./ngrx/recipe.effects";
 
 @NgModule({
     declarations: [
@@ -23,7 +27,11 @@ import { SharedModule } from "../shared/shared.module";
         CommonModule,   // give access to directive like, ngClass, ngIf, ngFor
         ReactiveFormsModule,
         RecipesRoutingModule,
-        SharedModule
+        SharedModule,
+        // Since recipes module is lazily loaded.
+        // Here recipeReducer will be injected in global state once recipes module is loaded 
+        StoreModule.forFeature('recipes', recipeReducer),
+        EffectsModule.forFeature([RecipeEffects])
     ]
 })
 export class RecipesModule {

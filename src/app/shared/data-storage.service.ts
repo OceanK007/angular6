@@ -2,13 +2,12 @@ import { Injectable } from "@angular/core";
 import { RecipesService } from "../recipes/recipes-services";
 import { Recipe } from "../recipes/recipe.model";
 import { map } from "rxjs/operators";
-import { FirebaseAuthService } from "../auth/firebase-auth.service";
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from "@angular/common/http";
 
 @Injectable()
 export class DataStorageService {
     databaseURL = 'https://udemy-angular-database.firebaseio.com/recipe-book.json';
-    constructor(private httpClient: HttpClient, private recipesSevice: RecipesService, private firebaseAuthService: FirebaseAuthService) {}
+    constructor(private httpClient: HttpClient, private recipesSevice: RecipesService) {}
 
     // storeRecipes() {
     //     let accessToken = this.firebaseAuthService.getToken();
@@ -48,9 +47,10 @@ export class DataStorageService {
 
     // Using interceptors to send auth param
     storeRecipes() {
-        let accessToken = this.firebaseAuthService.getToken();
+        //let accessToken = this.firebaseAuthService.getToken();
         
         // Progress works on only this kind of requests i.e. new HttpRequest()
+        // Using interceptors to set auth param now
         const req = new HttpRequest('PUT', this.databaseURL, this.recipesSevice.getRecipes(), {
             reportProgress: true,
         });
@@ -68,7 +68,7 @@ export class DataStorageService {
     // }
 
     getRecipes() {
-        let accessToken = this.firebaseAuthService.getToken();
+        //let accessToken = this.firebaseAuthService.getToken();
 
         // this.httpClient.get<Recipe[]>(this.databaseURL+'?auth='+accessToken)
         // .pipe(map(

@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
+    // this.firebaseAuthService.signupUser(email,password);
     this.store.dispatch(new FirebaseAuthActionsImport.TrySignup({username: email, password: password}));
   }
 }

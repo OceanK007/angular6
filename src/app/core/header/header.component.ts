@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { DataStorageService } from "../../shared/data-storage.service";
-import { FirebaseAuthService } from "../../auth/firebase-auth.service";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
 import { Store } from "@ngrx/store";
 import * as AppReducersImport from '../../ngrx/app.reducers';
 import * as FirebaseAuthReducersImport from '../../auth/ngrx/firebase-auth.reducers';
+import * as FirebaseAuthActionsImport from '../../auth/ngrx/firebase-auth.actions';
+import * as RecipeActionsImport from '../../recipes/ngrx/recipe.actions';
 import { Observable } from "rxjs";
 
 @Component({
@@ -15,7 +16,6 @@ export class HeaderComponent implements OnInit {
     authState: Observable<FirebaseAuthReducersImport.State>;
 
     constructor(private dataStorageService: DataStorageService, 
-                private firebaseAuthService: FirebaseAuthService,
                 private store: Store<AppReducersImport.AppState>) {}
 
     ngOnInit() {
@@ -73,10 +73,12 @@ export class HeaderComponent implements OnInit {
     
 
     fetchData() {
-        this.dataStorageService.getRecipes();
+        //this.dataStorageService.getRecipes();
+        this.store.dispatch(new RecipeActionsImport.FetchRecipes());
     }
 
     onLogout() {
-        this.firebaseAuthService.logout();
+        //this.firebaseAuthService.logout();
+        this.store.dispatch(new FirebaseAuthActionsImport.Logout());
     }
 }

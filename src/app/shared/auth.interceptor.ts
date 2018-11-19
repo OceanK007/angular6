@@ -6,6 +6,9 @@ import { map, switchMap, take } from 'rxjs/operators';
 import * as AppReducersImport from '../ngrx/app.reducers';
 import * as FirebaseAuthReducersImport from '../auth/ngrx/firebase-auth.reducers';
 
+// Interceptors are used to modify the request/response before/after sending/fetching
+// Here we have added "auth" parameter to each request before sending it
+// Check "core.module.ts" where we used this Interceptor
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     constructor(private store: Store<AppReducersImport.AppState>) {}

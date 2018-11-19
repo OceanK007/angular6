@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +32,12 @@ import { FirebaseAuthEffects } from './auth/ngrx/firebase-auth.effects';
     FirebaseAuthModule,
     CoreModule,
     StoreModule.forRoot(reducers),   // For NgRX // .forRoot()
-    EffectsModule.forRoot([FirebaseAuthEffects])
+    EffectsModule.forRoot([FirebaseAuthEffects]), // Using NgRX effects
+    StoreRouterConnectingModule,   // For router state management
+
+    // To debug state changes at runtime // Must be declared after StoreModule.forRoot(reducers)
+    // Using it for development environment only not for production
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   // Even if you doing modularization, if you want a service to be available for whole application, provide it in app.module.ts
   providers: [],
