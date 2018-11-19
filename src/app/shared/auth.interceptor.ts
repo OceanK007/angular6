@@ -2,7 +2,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/c
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { map, switchMap, take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import * as AppReducersImport from '../ngrx/app.reducers';
 import * as FirebaseAuthReducersImport from '../auth/ngrx/firebase-auth.reducers';
 
@@ -19,13 +19,15 @@ export class AuthInterceptor implements HttpInterceptor {
         // const copiedRequest = request.clone({headers: request.headers.append('', '')});  
         // To set params
         return this.store.select('auth')
-        .pipe(take(1))  // To take auth value only once
-        .pipe(switchMap(
-            (authState: FirebaseAuthReducersImport.State) => {
-                const copiedRequest = request.clone({params: request.params.set('auth', authState.token)});
-                return next.handle(copiedRequest);
-            }
-        )) 
+        .pipe(
+            take(1),    // To take auth value only once
+            switchMap(
+                (authState: FirebaseAuthReducersImport.State) => {
+                    const copiedRequest = request.clone({params: request.params.set('auth', authState.token)});
+                    return next.handle(copiedRequest);
+                }
+            )
+        );
 
         // return null; // Will not let the request complete
     }

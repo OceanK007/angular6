@@ -18,11 +18,13 @@ export class FirebaseAuthGuardService implements CanActivate {
         return this.store.select('auth')
         // If you don't use take(1) then if you paste this url: http://localhost:4200/recipes/new
         // This AuthGuard will take only one request or one element per guard activation
-        .pipe(take(1))
-        .pipe(map(
-            (authState: FirebaseAuthReducersImport.State) => {
-                return authState.authenticated;
-            }
-        ));
+        .pipe(
+            take(1),
+            map(
+                (authState: FirebaseAuthReducersImport.State) => {
+                    return authState.authenticated;
+                }
+            )
+        );
     }
 }

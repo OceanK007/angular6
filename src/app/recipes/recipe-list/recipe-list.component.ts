@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as RecipeReducersImport from '../ngrx/recipe.reducer';
+import * as RecipeReducersImport from '../ngrx/recipe.reducers';
 
 @Component({
   selector: 'app-recipe-list',

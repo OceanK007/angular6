@@ -21,43 +21,45 @@ export class FirebaseAuthEffects {
     @Effect()   // @Effect({dispatch: false})
     authSignup = this.actions$
     .ofType(FirebaseAuthActionsImport.TRY_SIGNUP)       // So this effect will be fired when we dispatch TrySignup action
-    .pipe(map(
-        (action: FirebaseAuthActionsImport.TrySignup) => {
-            return action.payload;
-        }
-    ))
-    .pipe(switchMap(
-        (authData: {username: string, password: string}) => {
-            // Here .from() is converting a promise to an Observable, since @Effect needs observable at the end
-            return from(firebase.auth().createUserWithEmailAndPassword(authData.username, authData.password));
-        }
-    ))
-    .pipe(switchMap(
-        () => {
-            return from(firebase.auth().currentUser.getIdToken());
-        }
-    ))
-    .pipe(mergeMap( // mergeMap to combine two the result of multiple observables and return new observable
-        (token: string) => {
-            // Finally we are returning actions which will be dispatched automatically and will change the state of app
-            // So here we are dispatching a new effect which is a combination of SIGNUP and SET_TOKEN actions
-            // and will be dispatched automatically to change state of app.
-
-            // @Effect({dispatch: false})
-            // Use this when you don't want to dispatch an effect i.e. which doesn't emit a new action i.e. doesn't change state
-            // You must not return any action while using dispatch: false
-
-            return [
-                {
-                    type: FirebaseAuthActionsImport.SIGNUP
-                },
-                {
-                    type: FirebaseAuthActionsImport.SET_TOKEN,
-                    payload: token
-                }
-            ];
-        }
-    ));
+    .pipe(
+        map(
+            (action: FirebaseAuthActionsImport.TrySignup) => {
+                return action.payload;
+            }
+        ),
+        switchMap(
+            (authData: {username: string, password: string}) => {
+                // Here .from() is converting a promise to an Observable, since @Effect needs observable at the end
+                return from(firebase.auth().createUserWithEmailAndPassword(authData.username, authData.password));
+            }
+        ),
+        switchMap(
+            () => {
+                return from(firebase.auth().currentUser.getIdToken());
+            }
+        ),
+        mergeMap( // mergeMap to combine two the result of multiple observables and return new observable
+            (token: string) => {
+                // Finally we are returning actions which will be dispatched automatically and will change the state of app
+                // So here we are dispatching a new effect which is a combination of SIGNUP and SET_TOKEN actions
+                // and will be dispatched automatically to change state of app.
+    
+                // @Effect({dispatch: false})
+                // Use this when you don't want to dispatch an effect i.e. which doesn't emit a new action i.e. doesn't change state
+                // You must not return any action while using dispatch: false
+    
+                return [
+                    {
+                        type: FirebaseAuthActionsImport.SIGNUP
+                    },
+                    {
+                        type: FirebaseAuthActionsImport.SET_TOKEN,
+                        payload: token
+                    }
+                ];
+            }
+        )
+    );
 
     // Here we have handled TRY_SIGNUP, before we were calling this.firebaseAuthService.signinUser(email,password);
     // in "signin.component.ts", now we dispatched TrySignin action, so this @Effect will be fired
@@ -65,35 +67,37 @@ export class FirebaseAuthEffects {
     @Effect()
     authSignin = this.actions$
     .ofType(FirebaseAuthActionsImport.TRY_SIGNIN)   // So this effect will be fired when we dispatch TrySignin action
-    .pipe(map(
-        (action: FirebaseAuthActionsImport.TrySignin) => {
-            return action.payload;
-        }
-    ))
-    .pipe(switchMap(
-        (authData: {username: string, password: string}) => {
-            return from(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password));
-        }
-    ))
-    .pipe(switchMap(
-        () => {
-            return from(firebase.auth().currentUser.getIdToken());
-        }
-    ))
-    .pipe(mergeMap( 
-        (token: string) => {
-            this.router.navigate(['/']);
-            return [
-                {
-                    type: FirebaseAuthActionsImport.SIGNIN
-                },
-                {
-                    type: FirebaseAuthActionsImport.SET_TOKEN,
-                    payload: token
-                }
-            ];
-        }
-    ));
+    .pipe(
+        map(
+            (action: FirebaseAuthActionsImport.TrySignin) => {
+                return action.payload;
+            }
+        ),
+        switchMap(
+            (authData: {username: string, password: string}) => {
+                return from(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password));
+            }
+        ),
+        switchMap(
+            () => {
+                return from(firebase.auth().currentUser.getIdToken());
+            }
+        ),
+        mergeMap( 
+            (token: string) => {
+                this.router.navigate(['/']);
+                return [
+                    {
+                        type: FirebaseAuthActionsImport.SIGNIN
+                    },
+                    {
+                        type: FirebaseAuthActionsImport.SET_TOKEN,
+                        payload: token
+                    }
+                ];
+            }
+        )
+    );
 
     @Effect({dispatch: false})
     authLogout = this.actions$

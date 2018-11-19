@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { RecipesService } from '../recipes-services';
-import * as RecipeReducersImport from '../ngrx/recipe.reducer';
+import * as RecipeReducersImport from '../ngrx/recipe.reducers';
 import * as RecipeActionsImport from '../ngrx/recipe.actions';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
@@ -18,7 +17,6 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
 
   constructor(private activatedRoute: ActivatedRoute, 
-              private recipeService: RecipesService, 
               private router: Router,
               private store: Store<RecipeReducersImport.FeatureState>) { }
 
