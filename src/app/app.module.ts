@@ -24,7 +24,12 @@ import { FirebaseAuthEffects } from './auth/ngrx/firebase-auth.effects';
     // BrowserModule is superset of CommonModule. 
     // So add CommonModule in other(feature) modules
     // And BrowserModule must be only in app.module.ts
-    BrowserModule,  
+
+    // .withServerTransition is used for angular universal
+    // To continue the app in the state you got from server
+    // Example: you got some recipes from database, and then
+    // You want to continue with that state at client
+    BrowserModule.withServerTransition({appId: "angular7"}),  
     HttpClientModule,
     AppRoutingModule,
     SharedModule,  
